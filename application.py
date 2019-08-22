@@ -25,10 +25,13 @@ app = Flask(__name__)
 # engine = create_engine(os.getenv("DATABASE_URL"))
 # db = scoped_session(sessionmaker(bind=engine))
 
-
-@app.route("/")
+@app.route("/", methods=["GET"])
+@login_required
 def index():
-    return render_template("layout.html",title="logged")
+    """Show home page Stuff"""
+
+    return render_template("index.html",title="logged")
+
 
 @app.route("/log")
 def loged():
