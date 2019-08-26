@@ -1,3 +1,3 @@
-# Project 1
+# I LIKE THIS BOOK
 
-Web Programming with Python and JavaScript
+I LIKE THIS BOOK is a book review Web application contructed using HTML/CSS, SASS, Python,SQL and FlasK. The project was hosted using Heroku and can be acessed through the following adress: https://ilikethisbook.herokuapp.com
