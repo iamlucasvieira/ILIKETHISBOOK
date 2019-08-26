@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+{#Book template #}
+
+<div class="container my-4 pt-2 bg-light">
+    <div class="row"  style="padding-bottom: 10px">
+        <div class="col-4 col-md-2"> <img src="http://covers.openlibrary.org/b/isbn/{{ book.isbn }}-L.jpg" class="img-fluid "> </div>
+        <div class="col ">
+            <div class="row">
+                <div class="col"><h3> {{ book.title }}</h3></div>
+            <div class="w-100"></div>
+                <div class="col"><h5 style="display:inline;">{{ book.author }}  |</h5>  <h6 style="display:inline;">{{ book.isbn }}</h7></h2></div>
+            <div class="w-100"></div>
+                {% if data is not none %}
+                <div class="col mt-3">
+                <h6> Rating on Goodreads: <b>{{ data["books"][0]["average_rating"]}}</b></h6>
+                <h6> Number of ratings: <b>{{ data["books"][0]["ratings_count"]}}</b></h6>
+                </div>
+                    {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% if user is not none %}
+{% if userhasreview is none %}
+<div class="container my-4 py-2 bg-light">
+<h2> Your Review</h2>
+
+<form method="post" action="{{  url_for('post', book=book.isbn) }}" >
+    <div class="form-group pt-3 mb-2">
+        <label for="exampleFormControlTextarea1"><h6>Book Rating:</h6> </label>
+        <div class="form-check form-check-inline pl-4">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+          <label class="form-check-label" for="inlineRadio1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="2">
+          <label class="form-check-label" for="inlineRadio2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
+          <label class="form-check-label" for="inlineRadio1">3</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="4">
+          <label class="form-check-label" for="inlineRadio2">4</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="5">
+          <label class="form-check-label" for="inlineRadio2">5</label>
+        </div>
+    </div>
+  <div class="form-group">
+      <label for="exampleFormControlTextarea1"><h6>What did you think about this book?</h6></label>
+    <textarea class="form-control" name="userreview" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+    <button class="btn btn-outline-primary btn-lg btn-block mb-2" type="submit">Post</button>
+</form>
+
+</div>
+
+{% endif %}
+{% endif %}
+
+
+<div class="container my-4 py-2 bg-light">
+<h2>Reviews</h2>
+
+
+{% if reviews is not none %}
+{%   for review in reviews %}
+
+{% if review.signup_id == user.id %}
+
+
+<div class="container pb-2 review  bg-white mt-4  text-dark border border-dark">
+    <div class="row  bg-dark text-white py-2">
+        <div class="col-6 col-sm-4">
+            <h4>{{ review.name }}</h4>
+        </div>
+        <div class="col-6 col-sm-4">
+            {% for i in range(review.rating|int) %}
+                <img src="/static/star.png" style="height: 25px">
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mt-2">
+    <h6>{{ review.message }}  </h6>
+            </div>
+
+    </div>
+    <div class="row justify-content-end">
+        <div  class="col-3 col-md-2 col-lg-1 justify-content-end">
+            <form action="{{ url_for("delete",post_id=review[0],book_isbn=book.isbn) }}" method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% else %}
+
+
+
+
+<div class="container pb-2 review  bg-white mt-4  text-dark border border-dark">
+    <div class="row  bg-dark text-white py-2">
+        <div class="col-6 col-sm-4">
+            <h4>{{ review.name }}</h4>
+        </div>
+        <div class="col-6 col-sm-4">
+            {% for i in range(review.rating|int) %}
+                <img src="/static/star.png" style="height: 25px">
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mt-2">
+    <h6>{{ review.message }}</h6>
+            </div>
+    </div>
+
+</div>
+
+{% endif %}
+{% endfor %}
+{% endif %}
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<div class="container mt-3">
+{% if message != none %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+    </div>
+{% endif %}
+{% for book in books %}
+{#Book template #}
+
+<div class="container my-4 pt-2 bg-light ">
+<a href="{{ url_for('book', book=book.isbn) }}"  style="text-decoration: none;">
+    <div class="row"  style="padding-bottom: 10px">
+
+        <div class="col-3 col-md-1"> <img src="http://covers.openlibrary.org/b/isbn/{{ book.isbn }}-L.jpg" class="img-fluid"> </div>
+        <div class="col ">
+            <div class="row">
+                <div class="col"><h3>{{ book.title }}</h3></div>
+            <div class="w-100"></div>
+                <div class="col"><h5 style="display:inline;">{{ book.author }}  |</h5>  <h6 style="display:inline;">{{ book.isbn }}</h7></h2></div>
+            <div class="w-100"></div>
+                <div class="col">
+                <h5>{{ book.year }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+</div>
+{% endfor %}
+{% endblock %}
