@@ -111,8 +111,7 @@ def trylog():
     if user is None:
         return render_template("login.html", logged=session.get('logged'), message="Email and Password doesn't match")
     session["logged"] = True
-    session["name"] = user.name
-    return render_template("layout.html",logged=session.get('logged'), message=session.get( 'name'),user=user)
+    return render_template("layout.html",logged=session.get('logged'), message=session.get( 'user').name,user=user)
 
 
 @app.route("/<string:book>",methods=["POST","GET"])
