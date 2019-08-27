@@ -69,8 +69,8 @@ def register():
     email = request.form.get("email")
     pass1 = request.form.get("password")
     pass2 = request.form.get("confirmpassword")
-    if name == "":
-        message = "Error: Name not informed"
+    if name =="" :
+        message = "Error: Name not informed!"
         return render_template("signup.html", logged=session.get('logged'), message=message)
     if email == "":
         message = "Error: Email not informed"
@@ -78,14 +78,11 @@ def register():
 
     if len(str(pass1)) != 0 and pass1==pass2:
         session["logged"]=True
-        return()
         newuser = Signup(name=name,email=email,password=pass1)
         db.add(newuser)
         db.commit()
         session["user"] = newuser
-        session["name"]=newuser.name
-        session["user_id"] = newuser.id
-        message = f"{ session.get('name')}, your Account has been created"
+        message = f"{ session.get('user').name}, your Account has been created"
         return render_template("layout.html",logged=session.get('logged'),message=message,user=session.get("user"))
     else:
         session["logged"]=False
@@ -95,7 +92,6 @@ def register():
 
 @app.route("/logout")
 def logout():
-    session.pop("name")
     session.pop("user")
     session["logged"] = False
     message = "You have logged out"
