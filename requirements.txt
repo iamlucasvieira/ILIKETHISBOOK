@@ -61,7 +61,7 @@ pyzmq==17.1.2
 QtAwesome==0.4.4
 qtconsole==4.4.1
 QtPy==1.4.2
-requests==2.19.1
+requests==2.20.0
 rope==0.11.0
 scipy==1.1.0
 simplegeneric==0.8.1
